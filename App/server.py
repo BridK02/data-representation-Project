@@ -1,6 +1,13 @@
 from flask import Flask, jsonify, request, abort, render_template
 from database.models import db
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+engine = create_engine('mysql://username:password@localhost/Yogastudio', echo=True)
+
+Session = sessionmaker(bind=engine)
+session = Session()
 
 app = Flask(__name__, static_url_path='', static_folder='.')
 
