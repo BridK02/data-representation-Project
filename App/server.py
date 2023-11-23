@@ -1,10 +1,13 @@
+import sys
+sys.path.append('C:/Users/bridc/repo/data-representation-Project/database')
+
 from flask import Flask, jsonify, request, abort, render_template
-from database.models import db
+from database.YogaDAO import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('mysql://username:password@localhost/Yogastudio', echo=True)
+engine = create_engine('mysql://root:root@localhost/Yogastudio', echo=True)
 
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -18,14 +21,9 @@ app = Flask(__name__, static_url_path='', static_folder='.')
     { "id":4 "Title":"Aerial Intermediate", "Instructor":" Liz", "Price":1100}
     { "id":4 "Title":"Aerial Advanced", "Instructor":" Orla", "Price":1100}
     { "id":5 "Title":"Pilates", "Instructor":" Orla", "Price":1200}
-]
-nextId=6
-#app = Flask(__name__)
+]'''
 
-#@app.route('/')
-#def index():
-#    return "Hello, World!"'''
-
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Database configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/database_name'
@@ -42,8 +40,6 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
 
 
 
