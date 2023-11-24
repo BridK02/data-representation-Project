@@ -2,7 +2,7 @@ import sys
 sys.path.append('C:/Users/bridc/repo/data-representation-Project/database')
 
 from flask import Flask, jsonify, request, abort, render_template
-from database.YogaDAO import db
+from YogaDAO import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
