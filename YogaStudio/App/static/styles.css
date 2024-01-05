@@ -1,8 +1,14 @@
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f8f8f8;
+  background-color: #f0f0f0;
+  align-items: center;
+  background-image: url('background.jpg'); *
   color: #333;
 }
+  /* Center all text in the body */
+  body, h1, h2, h3, h4, h5, h6, p, a, label, input, select, button {
+    text-align: center;
+  }
 
 header {
   background-color: #007BFF;
@@ -25,4 +31,10 @@ footer {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+}
+
+/* Add more styles to center your forms */
+form {
+  width: 50%; 
+  margin: auto;
 }

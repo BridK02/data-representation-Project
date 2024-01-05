@@ -17,8 +17,10 @@ depends_on = ${repr(depends_on)}
 
 
 def upgrade():
-    ${upgrades if upgrades else "pass"}
-
+    # Create a temporary column with a default value
+    op.add_column('classes', sa.Column('temp_image_filename', sa.String(length=255), nullable=True))
+    op.execute('UPDATE classes SET temp_image_filename = "default_value"')
+    op.alter_column('classes', 'temp_image_filename', nullable=False, new_column_name='image_filename')
 
 def downgrade():
-    ${downgrades if downgrades else "pass"}
+    op.drop_column('classes', 'image_filename')

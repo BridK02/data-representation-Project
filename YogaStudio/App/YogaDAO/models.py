@@ -2,16 +2,18 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from flask_bcrypt import Bcrypt
-from YogaDAO import db 
+from . import db 
+
 
 bcrypt = Bcrypt()
 
 class Classes(db.Model):
     __tablename__ = 'classes'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String(250))
-    instructor = Column(String(250))
-    fee = Column(Integer)
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    instructor = db.Column(db.String(255), nullable=False)
+    fee = db.Column(db.Integer, nullable=False)
+    image_filename = db.Column(db.String(255), nullable=False, default="default.jpg")
     bookings = relationship('Bookings', back_populates='yoga_class')
 
 class User(db.Model, UserMixin):

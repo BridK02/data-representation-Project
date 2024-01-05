@@ -2,20 +2,13 @@
 
 {% block content %}
     <h1>Yoga Class Booking</h1>
-</head>
-<body>
     <h1>Welcome to our Yoga Studio</h1>
     <form action="/bookings" method="post">
-        <!-- Add your form fields here -->
         <label for="class">Select a Yoga Class:</label>
         <select name="class" id="class">
-            <!-- Populate this dropdown with available classes -->
-            <option value="yin">Yin Yoga</option>
-            <option value="restorative">Restorative Yoga</option>
-            <option value="aerial_fundamentals">Aerial FUNdamentals</option>
-            <option value="aerial_Intermediate">Aerial Intermediate</option>
-            <option value="aerial_Advanced">Aerial Advanced</option>
-            <option value="Pilates">Pilates</option>
+            {% for class in classes %}
+                <option value="{{ class.id }}">{{ class.title }}</option>
+            {% endfor %}
         </select>
         <br>
         <label for="name">Your Name:</label>
@@ -26,7 +19,16 @@
         <br>
         <button type="submit">Book Class</button>
     </form>
-</body>
+    <div>
+        {% for class in classes %}
+            <div>
+                <h2>{{ class.title }}</h2>
+                <p>Instructor: {{ class.instructor }}</p>
+                <p>Fee: {{ class.fee }}</p>
+                <img src="{{ url_for('static', filename='images/' + class.image_filename) }}" alt="{{ class.title }} Image">
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
     
