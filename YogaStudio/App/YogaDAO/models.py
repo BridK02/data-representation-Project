@@ -20,12 +20,12 @@ class Classes(db.Model):
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(250))
-    email = Column(String(250), unique=True)
-    dob = Column(Date)
-    password = Column(String(250))
-    bookings = relationship('Bookings', back_populates='user')
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(250))
+    email = db.Column(db.String(250), unique=True)
+    dob = db.Column(db.Date)
+    password = db.Column(String(250))
+    bookings = db.relationship('Bookings', back_populates='user')
 
     def set_password(self, password):
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
