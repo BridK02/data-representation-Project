@@ -1,22 +1,26 @@
 import sys
+import secrets
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import sessionmaker
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from YogaDAO.models import User, Classes, Bookings
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from sqlalchemy import create_engine
+from YogaDAO.dbconfigpa import mysql
+from YogaDAO import db
+from YogaDAO import init_db
 from config import Config
-from YogaDAO import create_app, init_db
 
-init_db()
-app = create_app()
-
-with app.app_context():
-    init_db(app) 
+app = Flask(__name__, static_url_path='/static', template_folder='templates')
+ 
 
 app.config.from_object(Config)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{mysql['user']}:{mysql['password']}@{mysql['host']}/{mysql['database']}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+secret_key = app.config['SECRET_KEY']
+
+init_db(app) 
 
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
