@@ -19,7 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{mysql['user']}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 secret_key = app.config['SECRET_KEY']
 
-db = SQLAlchemy(app)
+db.init_app(app)
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 Session = sessionmaker(bind=engine)
