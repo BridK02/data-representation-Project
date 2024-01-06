@@ -13,8 +13,9 @@ try:# Create engine with PythonAnywhere MySQL configuration
         echo=True
     )
 
-    # Create tables
-    Base.metadata.create_all(engine)
+    
+    Classes.__table__.create(engine, checkfirst=True)
+
 
     # Create a session to interact with the database
     Session = sessionmaker(bind=engine)
@@ -62,7 +63,7 @@ try:# Create engine with PythonAnywhere MySQL configuration
                 session.delete(class_to_delete)
 
     session.commit()
-    
+
 except Exception as e:
     print(f"Error: {e}")
     raise
