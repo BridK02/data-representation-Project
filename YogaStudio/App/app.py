@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Session
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from YogaDAO.dbconfigpa import mysql
 from YogaDAO import db
 from YogaDAO.models import User, Classes, Bookings
 from config import Config
