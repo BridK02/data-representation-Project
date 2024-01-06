@@ -3,7 +3,7 @@ import secrets
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from sqlalchemy import create_engine
@@ -23,7 +23,6 @@ db = SQLAlchemy(app)
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 Session = sessionmaker(bind=engine)
-session = Session()
 
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)  # Use bcrypt from Flask-Bcrypt
