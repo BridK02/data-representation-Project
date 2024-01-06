@@ -11,6 +11,9 @@ from YogaDAO import create_app, init_db
 init_db()
 app = create_app()
 
+with app.app_context():
+    init_db(app) 
+
 app.config.from_object(Config)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{mysql['user']}:{mysql['password']}@{mysql['host']}/{mysql['database']}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
