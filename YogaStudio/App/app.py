@@ -13,9 +13,15 @@ from config import Config
 app = Flask(__name__, static_url_path='/static', template_folder='templates')
 
 app.config.from_object(Config)
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{mysql['user']}:{mysql['password']}@{mysql['host']}/{mysql['database']}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/Yogastudio'
 secret_key = app.config['SECRET_KEY']
+
+db = SQLAlchemy(app)
+
+engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+Session = sessionmaker(bind=engine)
+session = Session()
 
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)  # Use bcrypt from Flask-Bcrypt
