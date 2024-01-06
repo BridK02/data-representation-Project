@@ -4,10 +4,10 @@
     <h1>Booking Summary</h1>
     
     {% for booked_class in booked_classes %}
-        <div>
-            <h2>{{ booked_class.title }}</h2>
-            <p>Instructor: {{ booked_class.instructor }}</p>
-            <p>Fee: {{ booked_class.fee }}</p>
+      <div class="class-details">
+        <h3>{{ booked_class.yoga_class.title }}</h3>
+        <p>Instructor: {{ booked_class.yoga_class.instructor }}</p>
+        <p>Fee: ${{ booked_class.yoga_class.fee }}</p>
             <img src="{{ url_for('static', filename='images/' + booked_class.yoga_class.image_filename) }}" alt="{{ booked_class.yoga_class.title }} Image">
 
         </div>

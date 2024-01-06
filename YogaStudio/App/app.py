@@ -8,13 +8,14 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from YogaDAO import db
 from YogaDAO.models import User, Classes, Bookings
-from config import SECRET_KEY
+from config import Config
 
 app = Flask(__name__, static_url_path='/static', template_folder='templates')
 
+app.config.from_object(Config)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/Yogastudio'
-app.config['SECRET_KEY'] = SECRET_KEY
+secret_key = app.config['SECRET_KEY']
 
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)  # Use bcrypt from Flask-Bcrypt
@@ -185,3 +186,4 @@ if __name__ == '__main__':
         insert_example_data(db)
 
     app.run(debug=True)
+
