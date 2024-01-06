@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, and_, func
 from sqlalchemy.orm import sessionmaker
-from YogaDAO.models import Base, Classes
+from YogaDAO.models import Classes
 from YogaDAO.dbconfigpa import mysql  # Import MySQL configuration for PythonAnywhere
 
 # Create engine with PythonAnywhere MySQL configuration

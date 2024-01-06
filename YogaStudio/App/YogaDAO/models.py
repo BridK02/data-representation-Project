@@ -3,6 +3,8 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from flask_bcrypt import Bcrypt
+from .base import Base
+
 from . import db 
 
 
