@@ -30,7 +30,11 @@ def load_user(user_id):  # Function to load user from the database
 @app.route('/')
 def home():
     classes = Classes.query.all()  # Query all available classes
-    return render_template('index.html', classes=classes)
+
+    profile_link = url_for('profile')
+    booking_summary_link = url_for('booking_summary', class_id=1)
+
+    return render_template('index.html', classes=classes, profile_link=profile_link, booking_summary_link=booking_summary_link)
 @app.route('/')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -185,5 +189,5 @@ if __name__ == '__main__':
         recreate_database(db)  # Pass the db instance as an argument
         insert_example_data(db)
 
-    app.run(debug=True)
+    app.run(debug=False)
 

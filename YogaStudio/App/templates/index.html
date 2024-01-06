@@ -1,34 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="user-links">
+        <a href="{{ profile_link }}">View Profile</a>
+        <a href="{{ booking_summary_link }}">Booking Summary</a>
+    </div>
+
     <h1>Yoga Class Booking</h1>
-    <h1>Welcome to our Yoga Studio</h1>
+    <h1>Welcome to The Yoga Studio</h1>
     <div class="image-container">
-        {% for class in classes %}
-            <div class="class-item">
-                <h2>{{ class.title }}</h2>
-                <p>Instructor: {{ class.instructor }}</p>
-                <p>Fee: {{ class.fee }}</p>
-                <img class="class-image" src="{{ url_for('static', filename='images/' + class.image_filename) }}" alt="{{ class.title }} Image">
+        {% for yoga_class in classes %}
+            <div class="class">
+                <h2>{{ yoga_class.title }}</h2>
+                <p>Instructor: {{ yoga_class.instructor }}</p>
+                <p>Fee: ${{ yoga_class.fee }}</p>
+                <img class="class-image" src="{{ url_for('static', filename='images/' + yoga_class.image_filename) }}" alt="{{ yoga_class.title }} Image">
+                <a href="{{ url_for('bookings') }}" class="book-class-link">Book Now</a>
             </div>
         {% endfor %}
     </div>
-    <form action="/bookings" method="post">
-        <label for="class">Select a Yoga Class:</label>
-        <select name="class" id="class">
-            {% for class in classes %}
-                <option value="{{ class.id }}">{{ class.title }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <label for="name">Your Name:</label>
-        <input type="text" name="name" id="name" required>
-        <br>
-        <label for="email">Your Email:</label>
-        <input type="email" name="email" id="email" required>
-        <br>
-        <button type="submit">Book Class</button>
-    </form>
 {% endblock %}
 
 
