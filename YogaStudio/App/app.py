@@ -16,7 +16,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/Yogastudio'
 app.config['SECRET_KEY'] = SECRET_KEY
 
-
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)  # Use bcrypt from Flask-Bcrypt
 login_manager = LoginManager(app)
@@ -29,7 +28,9 @@ def load_user(user_id):  # Function to load user from the database
 # Define routes and views
 @app.route('/')
 def home():
-    return render_template('index.html')
+    classes = Classes.query.all()  # Query all available classes
+    return render_template('index.html', classes=classes)
+@app.route('/')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -92,46 +93,63 @@ def profile():
     user = current_user
     return render_template('profile.html', user=user)
 
+
+@app.route('/booking_summary/<int:class_id>')
+@login_required
+def booking_summary(class_id=None):
+    print(f"Received class ID in booking_summary: {class_id}")
+    # Retrieve the selected class
+    yoga_class = Classes.query.get(class_id)
+
+    # Ensure the class exists
+    if not yoga_class:
+        flash('Selected class not found', 'error')
+        return redirect(url_for('home'))
+
+    # Get all booked classes for the current user
+    booked_classes = current_user.bookings
+
+     # Calculate total cost based on all booked classes
+    total_cost = sum(booked_class.yoga_class.fee for booked_class in booked_classes)
+    try:
+        # Commit changes to the database
+        db.session.commit()
+    except Exception as e:
+        # Handle the exception, print an error message, and rollback changes
+        print(f"Error during commit: {e}")
+        db.session.rollback()
+
+    # Render the booking summary template with relevant data
+    return render_template('booking_summary.html', booked_classes=booked_classes, total_cost=total_cost)
+
 @app.route('/bookings', methods=['GET', 'POST'])
 @login_required
 def bookings():
+    user_selected_class_id = None
+
     if request.method == 'POST':
-        class_selected = request.form.get('class')
         user_name = request.form.get('name')
         user_email = request.form.get('email')
+        user_selected_class_title = request.form.get('class_title')
 
-        # Validate the form data (add more validation as needed)
-        if not class_selected or not user_name or not user_email:
-            flash('Invalid form data. Please fill in all fields.', 'error')
+        user_selected_class = Classes.query.filter_by(title=user_selected_class_title).first()
+
+        if user_selected_class:
+            user_selected_class_id = user_selected_class.id
+            print(f"Selected class ID: {user_selected_class_id}")
+
+            # Create a new booking and add it to the database
+            new_booking = Bookings(class_id=user_selected_class_id, user_id=current_user.id)
+            db.session.add(new_booking)
+            db.session.commit()
+
+            return redirect(url_for('booking_summary', class_id=user_selected_class_id))
+        else:
+            flash('Invalid class title selected.')
             return redirect(url_for('bookings'))
 
-        # Query the database to find the selected class
-        selected_class = Classes.query.filter_by(id=class_selected).first()
-
-        if not selected_class:
-            flash('Invalid class selection. Please try again.', 'error')
-            return redirect(url_for('bookings'))
-
-        # Create a new booking instance
-        new_booking = Bookings(user=current_user, yoga_class=selected_class)
-        # Add additional logic to save other booking details if needed
-
-        # Add the new booking to the database
-        db.session.add(new_booking)
-        db.session.commit()
-
-        flash('Booking successful!', 'success')
-        return redirect(url_for('home'))
-    # For GET requests, render the bookings page
-    classes = Classes.query.all()  # Query all available classes
-
-    # Check if the user has completed registration and login
-    if 'registered' not in session or 'logged_in' not in session:
-        flash('You need to register and log in before booking a class.', 'info')
-        return redirect(url_for('register'))
-
+    classes = Classes.query.all()
     return render_template('bookings.html', classes=classes)
-
 
 @app.route('/logout')
 @login_required
@@ -143,14 +161,15 @@ def recreate_database(database):
     database.drop_all()
     database.create_all()
 
+
 def insert_example_data(database):
     class_data = [
-        {"title": "Yin Yoga", "instructor": "Emma", "fee": 1000, "image_filename": "Yin.jpg"},
-        {"title": "Restorative Yoga", "instructor": "Jane", "fee": 950, "image_filename": "Restorative.jpg"},
-        {"title": "Aerial FUNdamentals", "instructor": "Liz", "fee": 1100, "image_filename": "aerialFundamentals.jpg"},
-        {"title": "Aerial Intermediate", "instructor": "Liz", "fee": 1100, "image_filename": "aeriallmage.jpg"},
-        {"title": "Aerial Advanced", "instructor": "Orla", "fee": 1100, "image_filename": "aeriallmage.jpg"},
-        {"title": "Pilates", "instructor": "Orla", "fee": 1200, "image_filename": "pilatesimage.jpg"},
+        {"title": "Yin Yoga", "instructor": "Emma", "fee": 10.00, "image_filename": "Yin.jpg"},
+        {"title": "Restorative Yoga", "instructor": "Jane", "fee": 9.50, "image_filename": "Restorative.jpg"},
+        {"title": "Aerial FUNdamentals", "instructor": "Liz", "fee": 11.00, "image_filename": "aerialFundamentals.jpg"},
+        {"title": "Aerial Intermediate", "instructor": "Liz", "fee": 11.00, "image_filename": "aerialImage.jpg"},
+        {"title": "Aerial Advanced", "instructor": "Orla", "fee": 11.00, "image_filename": "aerialImage.jpg"},
+        {"title": "Pilates", "instructor": "Orla", "fee": 12.00, "image_filename": "pilatesImage.jpg"},
     ]
 
     for data in class_data:
@@ -158,7 +177,6 @@ def insert_example_data(database):
         db.session.add(new_class)
 
     database.session.commit()
-    
 
 if __name__ == '__main__':
     with app.app_context():

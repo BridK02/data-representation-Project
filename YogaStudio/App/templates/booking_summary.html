@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Booking Summary</h1>
+    
+    {% for booked_class in booked_classes %}
+        <div>
+            <h2>{{ booked_class.title }}</h2>
+            <p>Instructor: {{ booked_class.instructor }}</p>
+            <p>Fee: {{ booked_class.fee }}</p>
+            <img src="{{ url_for('static', filename='images/' + booked_class.yoga_class.image_filename) }}" alt="{{ booked_class.yoga_class.title }} Image">
+
+        </div>
+    {% endfor %}
+
+    {% if not booked_classes %}
+        <p>You haven't booked any classes yet.</p>
+    {% endif %}
+
+    <p>Total Cost: {{ total_cost }}</p>
+
+    <a href="{{ url_for('home') }}">Back to Home</a>
+{% endblock %}
+

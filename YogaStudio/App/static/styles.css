@@ -33,7 +33,21 @@ footer {
   padding: 20px;
 }
 
-/* Add more styles to center your forms */
+.image-container {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.class-item {
+  margin: 10px;
+  text-align: center;
+}
+
+.class-image {
+  width: 200px; /* Set a fixed width for the images */
+  height: auto; /* Maintain aspect ratio */
+}
+
 form {
   width: 50%; 
   margin: auto;

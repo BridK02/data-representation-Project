@@ -3,6 +3,16 @@
 {% block content %}
     <h1>Yoga Class Booking</h1>
     <h1>Welcome to our Yoga Studio</h1>
+    <div class="image-container">
+        {% for class in classes %}
+            <div class="class-item">
+                <h2>{{ class.title }}</h2>
+                <p>Instructor: {{ class.instructor }}</p>
+                <p>Fee: {{ class.fee }}</p>
+                <img class="class-image" src="{{ url_for('static', filename='images/' + class.image_filename) }}" alt="{{ class.title }} Image">
+            </div>
+        {% endfor %}
+    </div>
     <form action="/bookings" method="post">
         <label for="class">Select a Yoga Class:</label>
         <select name="class" id="class">
@@ -19,17 +29,9 @@
         <br>
         <button type="submit">Book Class</button>
     </form>
-    <div>
-        {% for class in classes %}
-            <div>
-                <h2>{{ class.title }}</h2>
-                <p>Instructor: {{ class.instructor }}</p>
-                <p>Fee: {{ class.fee }}</p>
-                <img src="{{ url_for('static', filename='images/' + class.image_filename) }}" alt="{{ class.title }} Image">
-            </div>
-        {% endfor %}
-    </div>
 {% endblock %}
+
+
 
     
 

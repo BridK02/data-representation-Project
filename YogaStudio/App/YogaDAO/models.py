@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+from datetime import datetime
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from flask_bcrypt import Bcrypt
@@ -14,7 +15,8 @@ class Classes(db.Model):
     instructor = db.Column(db.String(255), nullable=False)
     fee = db.Column(db.Integer, nullable=False)
     image_filename = db.Column(db.String(255), nullable=False, default="default.jpg")
-    bookings = relationship('Bookings', back_populates='yoga_class')
+    bookings = db.relationship('Bookings', back_populates='yoga_class', primaryjoin="Classes.id == Bookings.class_id")
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -32,13 +34,19 @@ class User(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password, password)
 
     def is_active(self):
-        # You can add additional logic here if needed
         return True
+
+class user_classes(db.Model):
+    __tablename__ = 'user_classes'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'), primary_key=True)
+    booking_date = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Bookings(db.Model):
     __tablename__ = 'bookings'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
-    user = relationship('User', back_populates='bookings')
-    class_id = Column(Integer, ForeignKey('classes.id'))
-    yoga_class = relationship('Classes', back_populates='bookings')
+    id = db.Column(db.Integer, primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    booking_date = db.Column(db.DateTime, default=datetime.utcnow)
+    user = db.relationship('User', back_populates='bookings')
+    yoga_class = db.relationship('Classes', back_populates='bookings')
