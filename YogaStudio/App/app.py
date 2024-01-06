@@ -189,10 +189,7 @@ def insert_example_data(database):
     database.session.commit()
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.init_app(app)
-        recreate_database(db)  # Pass the db instance as an argument
-        insert_example_data(db)
+    
 
     app.run(debug=False)
 
