@@ -1,3 +1,4 @@
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from YogaStudio.App.config import Config
 
