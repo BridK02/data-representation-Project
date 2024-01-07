@@ -11,6 +11,9 @@ from YogaDAO.dbconfigpa import mysql
 from YogaDAO import db
 from YogaDAO import init_db
 from config import Config
+from create_app import create_app
+
+app = create_app()
 
 app = Flask(__name__, static_url_path='/static', template_folder='templates')
  
