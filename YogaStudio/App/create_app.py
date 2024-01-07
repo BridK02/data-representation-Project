@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from YogaStudio.App.config import Config
-from YogaDAO import db
+from .YogaDAO import db
 
 db = SQLAlchemy()
 
