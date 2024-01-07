@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from flask_bcrypt import Bcrypt
 
-from . import db 
+from YogaDAO import db 
 
 
 bcrypt = Bcrypt()

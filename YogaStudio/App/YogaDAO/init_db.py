@@ -1,5 +1,5 @@
 from models import User, Classes, Bookings
-from YogaDAO import create_app
+from YogaStudio.App import create_app
 
 app = create_app()
 
