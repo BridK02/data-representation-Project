@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 from YogaStudio.App.YogaDAO.dbconfigpa import mysql
 from .YogaDAO import db
 from .YogaDAO import init_db
-from YogaStudio.config import Config
+from config import Config
 from create_app import create_app
 
 app = create_app()
