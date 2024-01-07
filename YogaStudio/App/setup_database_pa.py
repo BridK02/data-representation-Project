@@ -23,12 +23,12 @@ try:# Create engine with PythonAnywhere MySQL configuration
 
     # Populate the 'classes' table
     session.add_all([
-        Classes(title="Yin", instructor="Emma", fee=1000, image_filename="Yin.jpg"),
-        Classes(title="Restorative", instructor=" Jane", fee=950, image_filename="Restorative.jpg"),
-        Classes(title="Aerial FUNdamentals", instructor=" Liz", fee=1100, image_filename="aerialFundamentals.jpg"),
-        Classes(title="Aerial Intermediate", instructor=" Liz", fee=1100, image_filename="aeriallmage.jpg"),
-        Classes(title="Aerial Advanced", instructor=" Orla", fee=1100, image_filename="aeriallmage.jpg"),
-        Classes(title="Pilates", instructor=" Orla", fee=1200, image_filename="pilatesimage.jpg")
+        Classes(title="Yin", instructor="Emma", fee=10.00, image_filename="Yin.jpg"),
+        Classes(title="Restorative", instructor=" Jane", fee=9.50, image_filename="Restorative.jpg"),
+        Classes(title="Aerial FUNdamentals", instructor=" Liz", fee=11.00, image_filename="aerialFundamentals.jpg"),
+        Classes(title="Aerial Intermediate", instructor=" Liz", fee=11.00, image_filename="aeriallmage.jpg"),
+        Classes(title="Aerial Advanced", instructor=" Orla", fee=11.00, image_filename="aeriallmage.jpg"),
+        Classes(title="Pilates", instructor=" Orla", fee=12.00, image_filename="pilatesimage.jpg")
     ])
 
     # Identify classes with duplicated titles, instructors, and fees

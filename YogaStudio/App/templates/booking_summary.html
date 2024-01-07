@@ -7,7 +7,7 @@
       <div class="class-details">
         <h3>{{ booked_class.yoga_class.title }}</h3>
         <p>Instructor: {{ booked_class.yoga_class.instructor }}</p>
-        <p>Fee: ${{ booked_class.yoga_class.fee }}</p>
+        <p>Fee: &euro;${{ booked_class.yoga_class.fee }}</p>
             <img src="{{ url_for('static', filename='images/' + booked_class.yoga_class.image_filename) }}" alt="{{ booked_class.yoga_class.title }} Image">
 
         </div>
@@ -17,7 +17,8 @@
         <p>You haven't booked any classes yet.</p>
     {% endif %}
 
-    <p>Total Cost: {{ total_cost }}</p>
+    <p>Total Cost: &euro;{{ total_cost }}</p>
+
 
     <a href="{{ url_for('home') }}">Back to Home</a>
 {% endblock %}

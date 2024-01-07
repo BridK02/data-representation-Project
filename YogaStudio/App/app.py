@@ -9,7 +9,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from sqlalchemy import create_engine
 from YogaStudio.App.YogaDAO.dbconfigpa import mysql
 from .YogaDAO import db
-from .YogaDAO.models import Classes
+from .YogaDAO.models import Classes, User, Bookings, user_classes
 from .YogaDAO import init_db
 from YogaStudio.App.config import Config
 from YogaStudio.App.create_app import create_app
