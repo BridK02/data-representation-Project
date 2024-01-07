@@ -2,8 +2,8 @@ import sys
 # Add YogaStudio directory to sys.path
 sys.path.insert(0, '/home/G00411262/data-representation-Project/YogaStudio')
 
-from YogaStudio.App.YogaDAO import db
-from models import User, Classes, Bookings
+from /YogaDAO import db
+from /models import User, Classes, Bookings
 
 app = create_app()
 
