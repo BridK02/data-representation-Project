@@ -8,8 +8,8 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from sqlalchemy import create_engine
 from YogaStudio.App.YogaDAO.dbconfigpa import mysql
-from YogaDAO import db
-from YogaDAO import init_db
+from .YogaDAO import db
+from .YogaDAO import init_db
 from config import Config
 from create_app import create_app
 
