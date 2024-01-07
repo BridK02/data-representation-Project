@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from Yogastudio.config import Config
+from YogaStudio.App.config import Config
 from YogaDAO import db
 
 db = SQLAlchemy()
