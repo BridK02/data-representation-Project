@@ -14,7 +14,7 @@ class Classes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     instructor = db.Column(db.String(255), nullable=False)
-    fee = db.Column(db.Integer, nullable=False)
+    fee = db.Column(db.Float(precision=2), nullable=False)
     image_filename = db.Column(db.String(255), nullable=False, default="default.jpg")
     bookings = db.relationship('Bookings', back_populates='yoga_class', primaryjoin="Classes.id == Bookings.class_id")
 
