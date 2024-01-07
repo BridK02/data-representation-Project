@@ -7,7 +7,8 @@
       <div class="class-details">
         <h3>{{ booked_class.yoga_class.title }}</h3>
         <p>Instructor: {{ booked_class.yoga_class.instructor }}</p>
-        <p>Fee: &euro;${{ booked_class.yoga_class.fee }}</p>
+        <p>Fee: &euro;{{ "{:.2f}".format(booked_class.yoga_class.fee) }}/p>
+       
             <img src="{{ url_for('static', filename='images/' + booked_class.yoga_class.image_filename) }}" alt="{{ booked_class.yoga_class.title }} Image">
 
         </div>

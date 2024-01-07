@@ -13,7 +13,7 @@
             <div class="class">
                 <h2>{{ yoga_class.title }}</h2>
                 <p>Instructor: {{ yoga_class.instructor }}</p>
-                <p>Fee: &euro;{{ yoga_class.fee }}</p>
+                <p>Fee: &euro;{{ "{:.2f}".format(yoga_class.fee) }}</p>
                 <img class="class-image" src="{{ url_for('static', filename='images/' + yoga_class.image_filename) }}" alt="{{ yoga_class.title }} Image">
                 <a href="{{ url_for('bookings') }}" class="book-class-link">Book Now</a>
             </div>
